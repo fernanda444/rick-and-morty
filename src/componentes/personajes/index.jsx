@@ -14,7 +14,7 @@ function Personajes () {
   }, []);
   return (
     <>
-    {console.log(data)}
+    
     {data.map((unpersonaje, index) => (
         <div className='c-personajes'
         key={index}>
