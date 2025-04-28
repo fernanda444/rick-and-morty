@@ -1,8 +1,9 @@
-import { useState,useEffect } from 'react'
-import './style.css'
+import { useState, useEffect } from 'react';
+import './style.css';
 
-function Personajes () {
+function Personajes() {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     const obtenerDatos = async () => {
       const res = await fetch(`https://rickandmortyapi.com/api/character`);
@@ -12,25 +13,25 @@ function Personajes () {
 
     obtenerDatos();
   }, []);
+
   return (
     <>
-    
-    {data.map((unpersonaje, index) => (
-        <div className='c-personajes'
-        key={index}>
-          <p>{unpersonaje.name}</p>
-          <p>{unpersonaje.id}</p>
-          <p>{unpersonaje.status}</p>
-          <p>{unpersonaje.species}</p>
-          <p>{unpersonaje.type}</p>
-          <p>{unpersonaje.gender}</p>
-          <img src={unpersonaje.image} alt="" />
+      <h1 className="titulo">Personajes</h1>
 
-        </div>
-      ))}
+      <div className="contenedor-personajes">
+        {data.map((unpersonaje, index) => (
+          <div className="c-personajes" key={index}>
+            <p>{unpersonaje.name}</p>
+            <p>{unpersonaje.id}</p>
+            <p>{unpersonaje.status}</p>
+            <p>{unpersonaje.species}</p>
+            <p>{unpersonaje.gender}</p>
+            <img src={unpersonaje.image} alt={unpersonaje.name} />
+          </div>
+        ))}
+      </div>
     </>
-    
-  )
+  );
 }
 
-export default Personajes
+export default Personajes;
