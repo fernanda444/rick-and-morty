@@ -3,6 +3,7 @@ import './style.css';
 
 function Personajes() {
   const [data, setData] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -14,24 +15,48 @@ function Personajes() {
     obtenerDatos();
   }, []);
 
+
+  let resultados = data;
+
+  if (busqueda.length >= 3 ) {
+    resultados = data.filter(pokemon =>                            /*este es el if para la busquedad  */
+      pokemon.name.toLowerCase().includes(busqueda.toLowerCase())
+    );
+  }
+
   return (
     <>
+    <input
+        type="text"
+        placeholder="Buscar"
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        className="c-buscador"
+      />
       <h1 className="titulo">Personajes</h1>
 
       <div className="contenedor-personajes">
-        {data.map((unpersonaje, index) => (
-          <div className="c-personajes" key={index}>
-            <p>{unpersonaje.name}</p>
-            <p>{unpersonaje.id}</p>
-            <p>{unpersonaje.status}</p>
-            <p>{unpersonaje.species}</p>
-            <p>{unpersonaje.gender}</p>
-            <img src={unpersonaje.image} alt={unpersonaje.name} />
-          </div>
-        ))}
+        {resultados.length === 0 ? (
+  <p>No se encontraron personajes</p>
+) : (
+  resultados.map((unpersonaje) => (
+    <div className="c-personajes" key={unpersonaje.id}>
+      <p>{unpersonaje.name}</p>
+      <p>{unpersonaje.id}</p>
+      <p>{unpersonaje.status}</p>
+      <p>{unpersonaje.species}</p>
+      <p>{unpersonaje.gender}</p>
+      <img src={unpersonaje.image} alt={unpersonaje.name} />
+    </div>
+  ))
+)}
+
       </div>
     </>
   );
 }
+
+
+
 
 export default Personajes;
